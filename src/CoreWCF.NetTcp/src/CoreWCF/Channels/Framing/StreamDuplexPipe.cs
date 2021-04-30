@@ -116,8 +116,9 @@ namespace CoreWCF.Channels.Framing
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine("error");
                 // TODO: make sure the exception propagates somehow
             }
             finally
@@ -144,6 +145,10 @@ namespace CoreWCF.Channels.Framing
                     if (!MemoryMarshal.TryGetArray((ReadOnlyMemory<byte>)outputBuffer, out ArraySegment<byte> segment))
                     {
                         throw new InvalidOperationException("Buffer backed by array was expected");
+                    }
+                    if(!stream.CanRead)
+                    {
+                        break;
                     }
                     int bytesRead = await stream.ReadAsync(segment.Array, segment.Offset, segment.Count);
 

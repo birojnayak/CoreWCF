@@ -66,6 +66,7 @@ namespace CoreWCF.NetTcp.Tests
                         ((IChannel)channel).Open();
                         string result = channel.EchoString(testString);
                         Assert.Equal(testString, result);
+                        ((IChannel)channel).Close();
                     }
                 }
                 finally
